@@ -6,3 +6,19 @@
 - Listen to port 7777
 - Write request handlers for /test , /hello
 - Install nodemon and update scripts inside package.json
+- what are dependencies
+- what is the use of -g while npm install
+-  Difference between caret(^) and tilde(~)
+
+- initialize git
+- .gitignore
+- Create a remote repo on github
+- push all code to remote origin
+- Play with routes and route extensions "/hello","/","/test"
+- Order of routes matter alot
+- Install Postman app and create a workspace/new collection > test API calls
+- Write logic to handle GET, POST, PATCH, DELETE API Calls and test them on Postman
+- Explore routing and use of ?, +, (), * in the routes
+- Use of regex in routes /a/ , /.*fly$/
+- Reading the query params in the routes
+- Reading the dynamic routes
