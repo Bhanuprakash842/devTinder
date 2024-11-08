@@ -3,6 +3,7 @@ const connectDB = require("./config/database");
 const app = express();
 const User = require("./model/user");
 
+
 //When we keep the / route here , all the routes will be of same.So the sequence of the routes matters
 //Order of writing the routes matter alot
 
@@ -134,14 +135,19 @@ const User = require("./model/user");
 //     }
 // });
 
+app.use(express.json());
+
 app.post("/signup",async (req,res) => {
-    const user = User({
-        firstName : "Sachin",
-        lastName : "Tendulkar",
-        emailId : "sachin@tendulkar.com",
-        password : "sachin123",
-        //__v is added in the db 
-    });
+    // Creating a new instance of the user model
+    // const user = User({
+    //     firstName : "MS",
+    //     lastName : "Dhoni",
+    //     emailId : "ms@dhoni.com",
+    //     password : "ms123",
+    //     //__v is added in the db 
+    // });
+
+    const user = User(req.body);
     try{
     await user.save();
     res.send("User Added Successfully!");
@@ -149,7 +155,8 @@ app.post("/signup",async (req,res) => {
     catch(err){
         res.status(400).send("Error saving the user :"+err.message);
     }
-    // const user = new User(userObj);
+    // // const user = new User(userObj);
+    console.log(req.body);
 })
 
 connectDB().then(()=>{
