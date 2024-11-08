@@ -48,3 +48,11 @@
 - What is the difference between js object and json?
 - add the express.json middleware to your app
 - Make your signup API dynamic to recieve data fron the end user
+- User.findOne with duplicate email ids, which object will be returned ans is the oldest doc
+- API - Get user by email
+- API - Feed API - GET/feed - get all the users from the database
+- API - Delete a user by Id
+- API - Update a user by Id
+- Explore the Mongoose Documentation for mode methods
+- What are options in a Model.findOneAndUpdate method, explore the options
+- API - Update the user with email ID

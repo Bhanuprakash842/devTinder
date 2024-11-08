@@ -137,6 +137,48 @@ const User = require("./model/user");
 
 app.use(express.json());
 
+// Get user by email
+app.get("/user",async (req,res) =>{
+    const userEmail = req.body.emailId;
+    try{
+        const users = await User.findOne({emailId : userEmail});
+        if(!users)
+        {
+            res.status(404).send("User Not Found");
+        }
+        else{
+            res.send(users);
+        }
+        }
+    catch(err){
+        res.status(400).send("Something Went Wrong")
+    }
+})
+
+//feed API - GET /feed - get all the users from the database
+app.get("/feed",async (req,res) =>{
+    try{
+    const users = await User.find({});
+    res.send(users);
+    }
+    catch(err){
+        res.status(400).send("Something went wrong");
+    }
+});
+
+app.delete("/user",async (req,res) =>{
+    const userId = req.body.userId;
+    try{
+        const user = await User.findByIdAndDelete({_id:userId});
+        // const user = await User.findByIdAndDelete(userId);
+        res.send("User deleted successfully!");
+
+    }
+    catch(err){
+        res.status(400).send("Something went wrong");
+    }
+});
+
 app.post("/signup",async (req,res) => {
     // Creating a new instance of the user model
     // const user = User({
@@ -157,7 +199,21 @@ app.post("/signup",async (req,res) => {
     }
     // // const user = new User(userObj);
     console.log(req.body);
-})
+});
+
+app.patch("/user",async (req,res) =>{
+    const data = req.body;
+    const userId = req.body.userId;
+    // console.log(data);
+    try{
+        const user = await User.findByIdAndUpdate({_id:userId},data,{returnDocument:"after"});
+        console.log(user);
+        res.send("User updated successfully!");
+    }
+    catch(err){
+        res.status(400).send("Something Went Wrong");
+    }
+});
 
 connectDB().then(()=>{
     console.log("Database connection established...")
