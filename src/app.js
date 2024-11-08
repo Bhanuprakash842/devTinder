@@ -1,6 +1,8 @@
 const express = require("express");
-
+const connectDB = require("./config/database");
 const app = express();
+const User = require("./model/user");
+
 //When we keep the / route here , all the routes will be of same.So the sequence of the routes matters
 //Order of writing the routes matter alot
 
@@ -111,27 +113,53 @@ const app = express();
 //     res.send("Dleted a User");
 // });
 
-app.get("/getUserData",(req,res)=>{
+// app.get("/getUserData",(req,res)=>{
+//     try{
+//         //Logic of Db call abnd get user data
+
+//     throw new Error("dvmdjfk");
+//     res.send("User Data Sent");
+//     }
+//     catch(err)
+//     {
+//         res.status(500).send("Something Went Wrong");
+//     } 
+// });
+
+// app.use("/",(err,req,res,next)=>{
+//     if(err)
+//     {
+//         //Log your error message
+//         res.status(500).send("Something Went Wrong");
+//     }
+// });
+
+app.post("/signup",async (req,res) => {
+    const user = User({
+        firstName : "Sachin",
+        lastName : "Tendulkar",
+        emailId : "sachin@tendulkar.com",
+        password : "sachin123",
+        //__v is added in the db 
+    });
     try{
-        //Logic of Db call abnd get user data
-
-    throw new Error("dvmdjfk");
-    res.send("User Data Sent");
+    await user.save();
+    res.send("User Added Successfully!");
     }
-    catch(err)
-    {
-        res.status(500).send("Something Went Wrong");
+    catch(err){
+        res.status(400).send("Error saving the user :"+err.message);
     }
-});
+    // const user = new User(userObj);
+})
 
-app.use("/",(err,req,res,next)=>{
-    if(err)
-    {
-        //Log your error message
-        res.status(500).send("Something Went Wrong");
-    }
-});
+connectDB().then(()=>{
+    console.log("Database connection established...")
+    app.listen(7777,() =>{
+        console.log("Server is successfully listening on port 7777...")
+    })
+})
+    .catch((err)=>{
+        console.error("Database cannot be connected!!");
+    });
 
-app.listen(7777,() =>{
-    console.log("Server is successfully listening on port 7777...")
-});
+

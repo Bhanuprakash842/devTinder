@@ -34,3 +34,13 @@
 - write a dummy auth middleware for all user routes, except /user/login
 - Error  handling using app.use("/user",(err,req,res,next)=>{});
 - always use try-catch
+
+- Create a free cluster on mongoDB Official website (Mongo Atlas)
+- Install mongoose library
+- Connect your application to the Dtabase "Connection-url"/devTinder
+- Call the connectDB function and connect to the database before starting the application on 7777 port.
+- Create a userSchema & user Model
+- What is __v in the db when used post request?
+- Create POST /signup API to add data to database
+- Push some documents using API calls from postman
+- Error Handling using try , catch
