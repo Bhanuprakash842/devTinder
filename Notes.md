@@ -21,3 +21,6 @@ Mongoose consists of the
 - We dont want the user to change the emailId because it is the changing of all the identity.So we have to put a API level validation.
 
 - API level validation can be done by writing the logic in the patch API. So we can allow the user to update only the allowed keys of us.
+
+- When the user is giving the emialId same as the name and without @gmail.com . We should validate it by using the external library known as validator in npm
+- validator can be used to validate the email,password.
