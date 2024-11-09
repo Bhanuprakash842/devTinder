@@ -17,3 +17,7 @@ Mongoose consists of the
 -  validate  function runs on only the documents which are being added as new but not on the existing data updation So we should make validation true . In patch API which we have written , then the findByIdAndUpdate contains options runValidators:true
 
 - When we use timeStamps : true when the creation of Schema ,then mongoose will store the date and time of creation.
+
+- We dont want the user to change the emailId because it is the changing of all the identity.So we have to put a API level validation.
+
+- API level validation can be done by writing the logic in the patch API. So we can allow the user to update only the allowed keys of us.
