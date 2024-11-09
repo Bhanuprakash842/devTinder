@@ -2,7 +2,8 @@ const express = require("express");
 const connectDB = require("./config/database");
 const app = express();
 const User = require("./model/user");
-
+const validateSignUpData = require("./utils/validate");
+const bcrypt = require("bcrypt");
 
 //When we keep the / route here , all the routes will be of same.So the sequence of the routes matters
 //Order of writing the routes matter alot
@@ -180,6 +181,13 @@ app.delete("/user",async (req,res) =>{
 });
 
 app.post("/signup",async (req,res) => {
+    
+    try{
+    //Validate the data
+    validateSignUpData(req);
+    //Encrypt the Password
+    const {firstName,lastName,emailId,password} = req.body;
+    const passwordHash =await bcrypt.hash(password,10);
     // Creating a new instance of the user model
     // const user = User({
     //     firstName : "MS",
@@ -188,17 +196,42 @@ app.post("/signup",async (req,res) => {
     //     password : "ms123",
     //     //__v is added in the db 
     // });
-
-    const user = User(req.body);
-    try{
+    const user = User({
+        firstName,lastName,emailId,password:passwordHash
+    });
+    
     await user.save();
     res.send("User Added Successfully!");
     }
     catch(err){
-        res.status(400).send("Error saving the user :"+err.message);
+        res.status(400).send("ERROR :"+err.message);
     }
     // // const user = new User(userObj);
     console.log(req.body);
+});
+
+app.post("/login",async (req,res)=>{
+    try{
+        const {emailId,password} = req.body;
+
+        const user =  await User.findOne({emailId:emailId});
+        if(!user)
+        {
+            throw new Error("Invalid Credentials");
+        }
+        const isPasswordValid = await bcrypt.compare(password, user.password);
+
+        if(isPasswordValid)
+        {
+            res.send("Login Successful!!!");
+        }
+        else{
+            throw new Error("Invalid Credentials");
+        }
+    }
+    catch(err){
+        res.status(400).send("ERROR :"+err.message);
+    }
 });
 
 app.patch("/user",async (req,res) =>{

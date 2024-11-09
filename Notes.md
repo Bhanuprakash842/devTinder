@@ -24,3 +24,12 @@ Mongoose consists of the
 
 - When the user is giving the emialId same as the name and without @gmail.com . We should validate it by using the external library known as validator in npm
 - validator can be used to validate the email,password.
+
+### Encrypting Passwords
+- The password which is to be stored into the database should not be seen by anyone.
+- the password should be stored in a hash format in the database.
+- As our signup should be very perfect as it is entry point => We cannot write req.body.
+- So first thing should be the validation of data -> Encrypt the password.
+- So we will create a helper/utility function for the logic of the validation of data in utils folder as validation.js
+- npm bcrypt js library is used to encrypt the password of the user into the hash format
+- We need to create a login api to authenticate the users who have signed up and we will use the bcrypt.compare function to compare the password and the hash password and User.findOne() in order to find the emailId in the DB.
